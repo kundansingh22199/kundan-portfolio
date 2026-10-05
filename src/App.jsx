@@ -41,12 +41,12 @@ export const MARQUEE_ITEMS = [
 ]
 
 export const SUMMARY =
-  'Results-driven .NET Developer with 4+ years of hands-on experience designing and building scalable RESTful Web APIs, ASP.NET MVC web applications and backend services using C#, .NET Core and ASP.NET. Proven ability to integrate third-party payment gateways, manage complex SQL Server databases and deliver clean, maintainable code following clean architecture principles.'
+  'Results-driven .NET Developer with 4 years of hands-on experience designing and building scalable RESTful Web APIs, ASP.NET MVC web applications and backend services using C#, .NET Core and ASP.NET. Proven ability to integrate third-party payment gateways, manage complex SQL Server databases and deliver clean, maintainable code following clean architecture principles.'
 
 export const STATS = [
-  { value: '04+', label: 'Years of .NET experience' },
-  { value: '05', label: 'Live projects delivered & maintained' },
-  { value: '04', label: 'Payment gateways integrated' },
+  { value: '04', label: 'Years of .NET experience' },
+  { value: '05+', label: 'Live projects delivered & maintained' },
+  { value: '04+', label: 'Payment gateways integrated' },
 ]
 
 export const WORK_MODES = ['Full-time', 'Part-time', 'Hybrid', 'On-site', 'Remote']
@@ -259,7 +259,7 @@ function App() {
             </nav>
             <div className="mobile-menu-footer">
               <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
-              <a href={RESUME_URL} target="_blank" rel="noreferrer">Download résumé ↗</a>
+              <a href={RESUME_URL} target="_blank" rel="noreferrer">Download resume ↗</a>
             </div>
           </div>
         )}
