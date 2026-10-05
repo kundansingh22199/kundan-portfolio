@@ -275,7 +275,7 @@ function App() {
             <h1>
               <span className="block">Kundan</span>
               <span className="block text-stroke">Kumar</span>
-              <span className="block accent-line"><span className="line-fill">.NET Dev</span></span>
+              <span className="block accent-line"><span className="line-fill">.NET Developer</span></span>
             </h1>
 
             <p className="hero-summary">
