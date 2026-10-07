@@ -1,166 +1,31 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Check, Copy, Download } from 'lucide-react'
-import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa6'
+import { ArrowUpRight, Menu, X } from 'lucide-react'
+import { EMAIL, PHONE, PHONE_TEL, RESUME_URL } from './data/contact.js'
+import PortfolioAbout from './pages/portfolio/About.jsx'
+import PortfolioExperience from './pages/portfolio/Experience.jsx'
+import PortfolioProjects from './pages/portfolio/Projects.jsx'
+import PortfolioSkills from './pages/portfolio/Skills.jsx'
+import PortfolioContact from './pages/portfolio/Contact.jsx'
+import PortfolioHome from './pages/portfolio/Home.jsx'
+import StudioHome from './pages/studio/Home.jsx'
+import StudioServices from './pages/studio/Services.jsx'
+import StudioSolutions from './pages/studio/Solutions.jsx'
+import StudioWork from './pages/studio/Work.jsx'
+import StudioAbout from './pages/studio/About.jsx'
+import StudioApproach from './pages/studio/Approach.jsx'
+import StudioContact from './pages/studio/Contact.jsx'
 import './App.css'
 
-export const RESUME_URL =
-  'https://customer-assets-wrfwihn1.emergentagent.net/job_a14f00d8-e4b2-429a-9172-05dae87c796f/artifacts/wqykljah_Kundan%20Resume.pdf'
+export { EMAIL, PHONE, PHONE_TEL, RESUME_URL }
+const CURRENT_YEAR = new Date().getFullYear()
 
-export const EMAIL = 'kundanmth01@gmail.com'
-export const PHONE = '+91 97985 01225'
-export const PHONE_TEL = '+919798501225'
-
-export const NAV_LINKS = [
-  { number: '01', label: 'About', href: '/about', id: 'about' },
-  { number: '02', label: 'Experience', href: '/experience', id: 'experience' },
-  { number: '03', label: 'Projects', href: '/projects', id: 'projects' },
-  { number: '04', label: 'Skills', href: '/skills', id: 'skills' },
-  { number: '05', label: 'Contact', href: '/contact', id: 'contact' },
-]
-
-export const MARQUEE_ITEMS = [
-  'C#',
-  '.NET Core 8',
-  'ASP.NET Core',
-  'RESTful Web APIs',
-  'ASP.NET MVC',
-  'SQL Server',
-  'Stored Procedures',
-  'ADO.NET',
-  'Dapper',
-  'Razorpay',
-  'CCAvenue',
-  'Easebuzz',
-  'PhonePe',
-  'JavaScript',
-  'jQuery',
-  'Bootstrap',
-  'Visual Studio',
-  'Postman',
-]
-
-export const SUMMARY =
-  'Results-driven .NET Developer with 4 years of hands-on experience designing and building scalable RESTful Web APIs, ASP.NET MVC web applications and backend services using C#, .NET Core and ASP.NET. Proven ability to integrate third-party payment gateways, manage complex SQL Server databases and deliver clean, maintainable code following clean architecture principles.'
-
-export const STATS = [
-  { value: '04', label: 'Years of .NET experience' },
-  { value: '05+', label: 'Live projects delivered & maintained' },
-  { value: '04+', label: 'Payment gateways integrated' },
-]
-
-export const WORK_MODES = ['Full-time', 'Part-time', 'Hybrid', 'On-site', 'Remote']
-export const PREFERRED_LOCATIONS = ['Delhi', 'Noida', 'Gurugram', 'Open to all locations in India']
-
-export const EXPERIENCE = [
-  {
-    id: 'mnb',
-    company: 'MNB Soft Solution',
-    role: '.NET Core Developer',
-    period: 'Jan 2024 — Present',
-    current: true,
-    points: [
-      'Designed and developed highly scalable RESTful Web APIs using C# and .NET Core 8, strictly adhering to clean architecture principles.',
-      'Integrated multiple payment gateways — Razorpay, CCAvenue, Easebuzz and PhonePe — enabling secure and reliable online transactions.',
-      'Optimized complex SQL Server queries and stored procedures, significantly improving overall data retrieval performance.',
-      'Delivered, deployed and maintained multiple live projects including Mparchi, NvShoppe, MnbPromo and MLM Software.',
-    ],
-    stack: ['.NET Core 8', 'Web API', 'SQL Server', 'Payment Gateways'],
-  },
-  {
-    id: 'wts',
-    company: 'Wts Net India Pvt. Ltd.',
-    role: 'ASP.NET Developer',
-    period: 'Jun 2022 — Jan 2024',
-    current: false,
-    points: [
-      'Built and maintained responsive web applications utilizing ASP.NET MVC, C# and SQL Server.',
-      'Developed and consumed RESTful Web APIs to support dynamic application features and client-side interactions.',
-      'Implemented frontend user interfaces leveraging HTML, CSS, JavaScript and Bootstrap for seamless user experiences.',
-    ],
-    stack: ['ASP.NET MVC', 'C#', 'SQL Server', 'JavaScript', 'Bootstrap'],
-  },
-]
-
-export const PROJECTS = [
-  {
-    id: 'mparchi',
-    idx: '01',
-    name: 'Mparchi',
-    url: 'https://mparchi.com',
-    desc: 'Developed the backend microservices and logic powering the Mparchi platform using .NET Core Web API.',
-    tech: ['.NET Core Web API', 'C#', 'Microservices'],
-    img: 'https://images.unsplash.com/photo-1617040619263-41c5a9ca7521?crop=entropy&cs=srgb&fm=jpg&q=85',
-    wide: true,
-  },
-  {
-    id: 'nvshoppe',
-    idx: '02',
-    name: 'NvShoppe',
-    url: 'https://nvshoppe.com',
-    desc: 'Engineered the RESTful backend architecture for NvShoppe on .NET Core Web API.',
-    tech: ['.NET Core', 'REST API', 'SQL Server'],
-    img: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?crop=entropy&cs=srgb&fm=jpg&q=85',
-    wide: false,
-  },
-  {
-    id: 'sanatan-bhakti-cloud',
-    idx: '03',
-    name: 'Sanatan Bhakti Cloud',
-    url: 'https://sanatanbhakticloud.com',
-    desc: 'Built full-stack application features for the Sanatan Bhakti Cloud .NET Core web application.',
-    tech: ['.NET Core', 'Full-Stack', 'SQL Server'],
-    img: 'https://images.unsplash.com/photo-1489875347897-49f64b51c1f8?crop=entropy&cs=srgb&fm=jpg&q=85',
-    wide: false,
-  },
-  {
-    id: 'studio-batao',
-    idx: '04',
-    name: 'Studio Batao',
-    url: 'https://studiobatao.com',
-    desc: 'Integrated frontend and backend functionality across a .NET Core web application and API.',
-    tech: ['.NET Core', 'Web API', 'JavaScript'],
-    img: 'https://images.unsplash.com/photo-1599837565318-67429bde7162?crop=entropy&cs=srgb&fm=jpg&q=85',
-    wide: true,
-  },
-  {
-    id: 'mlm-software',
-    idx: '05',
-    name: 'MLM Software',
-    url: null,
-    desc: 'Constructed a complex multi-level marketing platform backend, heavily relying on .NET Core and SQL Server.',
-    tech: ['.NET Core', 'SQL Server', 'Stored Procedures'],
-    img: 'https://images.unsplash.com/photo-1680992046615-065f58bcb4d8?crop=entropy&cs=srgb&fm=jpg&q=85',
-    wide: true,
-  },
-]
-
-export const SKILLS = [
-  {
-    id: 'backend',
-    title: 'Backend',
-    items: ['C#', '.NET Core 8', 'ASP.NET Core Web API', 'ASP.NET MVC', 'ASP.NET (Web Forms)', 'REST'],
-  },
-  {
-    id: 'database',
-    title: 'Database',
-    items: ['SQL Server', 'Stored Procedures', 'ADO.NET', 'Dapper'],
-  },
-  {
-    id: 'frontend',
-    title: 'Frontend',
-    items: ['HTML5', 'CSS3', 'JavaScript', 'jQuery', 'Bootstrap'],
-  },
-  {
-    id: 'payments',
-    title: 'Payment Gateways',
-    items: ['Razorpay', 'CCAvenue', 'Easebuzz', 'PhonePe'],
-  },
-  {
-    id: 'tools',
-    title: 'Tools & Languages',
-    items: ['Visual Studio', 'Postman', 'English', 'Hindi'],
-  },
+const NAV_LINKS = [
+  { number: '01', label: 'About', href: '/portfolio/about', id: 'about' },
+  { number: '02', label: 'Experience', href: '/portfolio/experience', id: 'experience' },
+  { number: '03', label: 'Projects', href: '/portfolio/projects', id: 'projects' },
+  { number: '04', label: 'Skills', href: '/portfolio/skills', id: 'skills' },
+  { number: '05', label: 'Contact', href: '/portfolio/contact', id: 'contact' },
 ]
 
 function Logo() {
@@ -177,15 +42,6 @@ function Logo() {
   )
 }
 
-function SectionHead({ index, eyebrow, title }) {
-  return (
-    <div className="section-head">
-      <p className="section-eyebrow">{index} — {eyebrow}</p>
-      <h2>{title}</h2>
-    </div>
-  )
-}
-
 function NavigationLink({ link, activePage, onClick, numbered = false }) {
   const content = numbered ? <><span>{link.number}</span>{link.label}</> : link.label
 
@@ -196,11 +52,137 @@ function NavigationLink({ link, activePage, onClick, numbered = false }) {
   return <NavLink to={link.href} onClick={onClick}>{content}</NavLink>
 }
 
+const STUDIO_NAV = [
+  { label: 'Services', href: '/services' },
+  { label: 'Solutions', href: '/solutions' },
+  { label: 'Work', href: '/work' },
+  { label: 'Portfolio', href: '/portfolio', route: true },
+  { label: 'About', href: '/about' },
+  { label: 'Approach', href: '/approach' },
+  { label: 'Contact', href: '/contact' },
+]
+
+function StudioLogo() {
+  return <Logo />
+}
+
+function StudioNavigationLink({ item, onClick }) {
+  const className = item.label === 'Portfolio' ? 'studio-nav-portfolio' : undefined
+  return <Link className={className} to={item.href} onClick={onClick}>{item.label}</Link>
+}
+
+const STUDIO_PAGES = {
+  '/': 'home',
+  '/services': 'services',
+  '/solutions': 'solutions',
+  '/work': 'work',
+  '/about': 'about',
+  '/approach': 'approach',
+  '/contact': 'contact',
+}
+
+const STUDIO_PAGE_HEADINGS = {
+  services: { index: '01', eyebrow: 'WHAT WE DO', title: <>Practical software.<br /><span>Built to deliver.</span></>, lead: 'From a first API to a complete application, we focus on useful technology that solves real business needs.' },
+  solutions: { index: '02', eyebrow: 'WHO WE HELP', title: <>Technology for the work<br /><span>that matters.</span></>, lead: 'We focus on everyday business challenges and build tools that help your people do their best work.' },
+  work: { index: '03', eyebrow: 'SELECTED WORK', title: <>Made to work<br /><span>in the real world.</span></>, lead: 'A selection of live products and platforms supported by practical engineering and dependable systems.' },
+  about: { index: '04', eyebrow: 'ABOUT KUNDAN', title: <>Meet Kundan<br /><span>Kumar.</span></>, lead: 'Independent, hands-on software development grounded in four years of production experience.' },
+  approach: { index: '05', eyebrow: 'HOW I WORK', title: <>Clear thinking.<br /><span>Careful delivery.</span></>, lead: 'A practical, collaborative process that keeps the work focused and the outcome dependable.' },
+  contact: { index: '06', eyebrow: 'CONTACT', title: <>Let&apos;s make<br /><span>it work.</span></>, lead: 'For project enquiries, collaborations, or questions, get in touch. I’d be glad to hear from you.' },
+}
+
+const STUDIO_PAGE_TITLES = {
+  services: 'Services',
+  solutions: 'Solutions',
+  work: 'Selected Work',
+  about: 'About',
+  approach: 'Approach',
+  contact: 'Contact',
+}
+
+function StudioPageHeading({ page }) {
+  const heading = STUDIO_PAGE_HEADINGS[page]
+  if (!heading) return null
+
+  return (
+    <header className="studio-page-heading">
+      <p className="studio-eyebrow"><span /> {heading.index} — {heading.eyebrow}</p>
+      <h1>{heading.title}</h1>
+      <p>{heading.lead}</p>
+    </header>
+  )
+}
+
+function StudioWebsite() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const { pathname } = useLocation()
+  const page = STUDIO_PAGES[pathname] || 'home'
+
+  return (
+    <div className={`studio-shell studio-page-${page}`}>
+      <header className="studio-header">
+        <div className="studio-header-inner">
+          <StudioLogo />
+          <nav className="studio-nav" aria-label="Main navigation">
+            {STUDIO_NAV.map((item) => <StudioNavigationLink key={item.label} item={item} />)}
+          </nav>
+          <Link className="studio-header-cta" to="/contact">
+            Contact me <ArrowUpRight size={16} aria-hidden="true" />
+          </Link>
+          <button
+            className="studio-menu-toggle"
+            type="button"
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <X size={23} /> : <Menu size={23} />}
+          </button>
+        </div>
+        {menuOpen && (
+          <nav className="studio-mobile-nav" aria-label="Mobile navigation">
+            {STUDIO_NAV.map((item) => (
+              <StudioNavigationLink key={item.label} item={item} onClick={() => setMenuOpen(false)} />
+            ))}
+            <Link className="studio-mobile-cta" to="/contact" onClick={() => setMenuOpen(false)}>
+              Contact me <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+          </nav>
+        )}
+      </header>
+
+      <main className="studio-main">
+        {page === 'home' && <StudioHome />}
+
+        {page !== 'home' && <StudioPageHeading page={page} />}
+
+        {(page === 'home' || page === 'services') && <StudioServices home={page === 'home'} />}
+        {(page === 'home' || page === 'solutions') && <StudioSolutions home={page === 'home'} />}
+        {(page === 'home' || page === 'work') && <StudioWork home={page === 'home'} />}
+        {(page === 'home' || page === 'about') && <StudioAbout />}
+        {(page === 'home' || page === 'approach') && <StudioApproach home={page === 'home'} />}
+        {(page === 'home' || page === 'contact') && <StudioContact home={page === 'home'} />}
+      </main>
+
+      <footer className="studio-footer">
+        <StudioLogo />
+        <span>Independent software studio · New Delhi, India</span>
+        <div><Link to="/portfolio">Portfolio</Link><a href={`mailto:${EMAIL}`}>Email</a><span>© {CURRENT_YEAR} Kundan Kumar</span></div>
+      </footer>
+    </div>
+  )
+}
+
 function App() {
   const { pathname } = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
   const [copyFeedback, setCopyFeedback] = useState('')
-  const activePage = NAV_LINKS.some((link) => link.href === pathname) ? pathname : '/'
+  const isPortfolioPage = pathname === '/portfolio' || pathname.startsWith('/portfolio/')
+  const portfolioPath = pathname === '/portfolio' ? '/' : pathname.replace('/portfolio', '')
+  const activePage = pathname === '/portfolio'
+    ? '/portfolio-home'
+    : NAV_LINKS.some((link) => link.href === pathname)
+      ? portfolioPath
+      : '/'
 
   const copyContact = async (label, value) => {
     try {
@@ -213,10 +195,19 @@ function App() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [pathname])
+    document.title = isPortfolioPage
+      ? 'Kundan Kumar — .NET Developer | Portfolio'
+      : pathname === '/'
+        ? 'Kundan Kumar — Software Developer | Web & .NET Solutions'
+        : `Kundan Kumar — ${STUDIO_PAGE_TITLES[STUDIO_PAGES[pathname]] || 'Software Developer'}`
+  }, [pathname, isPortfolioPage])
+
+  if (!isPortfolioPage) {
+    return <StudioWebsite />
+  }
 
   return (
-    <div className={`app-shell ${activePage === '/' ? 'home-shell' : ''} ${activePage === '/projects' ? 'projects-shell' : ''}`}>
+    <div className={`app-shell ${activePage === '/' || activePage === '/portfolio-home' ? 'home-shell' : ''} ${activePage === '/projects' ? 'projects-shell' : ''}`}>
       <header className="site-header">
         <div className="header-inner">
           <Logo />
@@ -266,301 +257,18 @@ function App() {
       </header>
 
       <main className="main-content">
-        {activePage === '/' && (
+        {(activePage === '/' || activePage === '/portfolio-home') && (
           <>
-        <section id="top" className="hero-section">
-          <div className="hero-copy">
-            <p className="hero-badge">Open to work — Immediate joiner</p>
-
-            <h1>
-              <span className="block">Kundan</span>
-              <span className="block text-stroke">Kumar</span>
-              <span className="block accent-line"><span className="line-fill">.NET Developer</span></span>
-            </h1>
-
-            <p className="hero-summary">
-              Passionate about building <span>scalable, efficient</span> and <span>user-friendly</span> web applications and backend services — with <em>4 years</em> of production experience.
-            </p>
-
-            <div className="hero-actions">
-              <Link to="/projects" className="primary-btn">View projects</Link>
-              <a href={RESUME_URL} target="_blank" rel="noreferrer" className="secondary-btn">Download résumé</a>
-            </div>
-
-            <ul className="hero-meta">
-              <li>Akshardham, New Delhi</li>
-              <li>Notice period: Immediate</li>
-              <li>Delhi · Noida · Gurugram · All India</li>
-            </ul>
-          </div>
-
-          <div className="hero-portrait" aria-label="Portfolio portrait">
-            <div className="portrait-frame">
-              <img src="/hero-portrait.jpeg" alt="Kundan Kumar — .NET Developer" />
-            </div>
-            <span className="floating-chip chip-a">◆ .NET Core 8</span>
-            <span className="floating-chip chip-b">◆ SQL Server</span>
-            <span className="floating-chip chip-c">◆ REST API</span>
-          </div>
-        </section>
-
-        <div className="marquee-wrap" aria-label="Technology stack">
-          <div className="marquee-track">
-            {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, index) => (
-              <span key={`${item}-${index}`} className="marquee-item">
-                {item}
-                <span>◆</span>
-              </span>
-            ))}
-          </div>
-        </div>
+            <PortfolioHome />
           </>
         )}
 
-        {(activePage === '/' || activePage === '/about') && (
-        <section id="about" className="content-section">
-          <SectionHead index="01" eyebrow="About" title={<>Backend problems, solved with <span className="accent-italic">clean architecture</span></>} />
+        {(activePage === '/about' || activePage === '/portfolio-home') && <PortfolioAbout />}
+        {(activePage === '/experience' || activePage === '/portfolio-home') && <PortfolioExperience />}
+        {(activePage === '/projects' || activePage === '/portfolio-home') && <PortfolioProjects />}
+        {(activePage === '/skills' || activePage === '/portfolio-home') && <PortfolioSkills />}
 
-          <div className="about-grid">
-            <div className="bio-card">
-              <p>{SUMMARY}</p>
-              <div className="mini-tags">
-                <span>Comfortable working independently</span>
-                <span>Cross-functional teams</span>
-                <span>On-schedule delivery</span>
-              </div>
-              <p className="sig">— Kundan Kumar</p>
-            </div>
-
-            <div className="poster-card">
-              <img src="/about-poster.jpeg" alt="Kundan Kumar .NET Developer portfolio poster" />
-            </div>
-
-            {STATS.map((stat, index) => (
-              <div key={stat.label} className="stat-card">
-                <span className="stat-icon">{index === 0 ? '◎' : index === 1 ? '▣' : '◈'}</span>
-                <div className="stat-body">
-                  <strong>{stat.value}</strong>
-                  <span>{stat.label}</span>
-                </div>
-              </div>
-            ))}
-
-            <div className="availability-card">
-              <div className="availability-head">
-                <span>Work preference</span>
-                <strong>Immediate joiner</strong>
-              </div>
-              <div className="availability-body">
-                <h3>Open to all types of work</h3>
-                <div className="work-modes">
-                  {WORK_MODES.map((mode) => (
-                    <span key={mode}>{mode}</span>
-                  ))}
-                </div>
-              </div>
-              <p className="location-line">{PREFERRED_LOCATIONS.join(' · ')}</p>
-            </div>
-
-            <div className="education-card">
-              <span className="edu-icon">◌</span>
-              <div>
-                <h3>BCA — Computer Applications</h3>
-                <p>Indira Gandhi National Open University (IGNOU)</p>
-                <small>Graduated Dec 2020</small>
-              </div>
-            </div>
-          </div>
-        </section>
-        )}
-
-        {(activePage === '/' || activePage === '/experience') && (
-        <section id="experience" className="content-section timeline-section">
-          <SectionHead index="02" eyebrow="Experience" title={<>Four years on <span className="accent-italic">production code</span></>} />
-
-          <div className="experience-list">
-            {EXPERIENCE.map((job) => (
-              <article key={job.id} className="experience-card">
-                <span className={`job-dot ${job.current ? 'active' : ''}`} />
-                <div className="experience-inner">
-                  <div className="role-head">
-                    <div>
-                      <h3>{job.role}</h3>
-                      <p>{job.company}</p>
-                    </div>
-                    <span className={`period ${job.current ? 'current' : ''}`}>{job.period}</span>
-                  </div>
-
-                  <ul>
-                    {job.points.map((point) => (
-                      <li key={point}>{point}</li>
-                    ))}
-                  </ul>
-
-                  <div className="chip-row">
-                    {job.stack.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-        )}
-
-        {(activePage === '/' || activePage === '/projects') && (
-        <section id="projects" className="content-section projects-section">
-          <SectionHead index="03" eyebrow="Selected work" title={<>Shipping <span className="accent-italic">live</span> in production</>} />
-
-          <div className="project-grid">
-            {PROJECTS.map((project) => (
-              <article
-                key={project.id}
-                className={`project-card${project.wide ? ' wide' : ''}${project.id === 'mlm-software' ? ' full' : ''}`}
-              >
-                <div className="project-image">
-                  <img src={project.img} alt={project.name} />
-                  <span className="project-index">{project.idx}</span>
-                </div>
-
-                <div className="project-body">
-                  <div className="project-title-row">
-                    <h3>{project.name}</h3>
-                    {project.url && (
-                      <a className="external-link" href={project.url} target="_blank" rel="noreferrer" aria-label={`Visit ${project.name}`}>
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-                  </div>
-                  <p>{project.desc}</p>
-                  <div className="chip-row">
-                    {project.tech.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-        )}
-
-        {(activePage === '/' || activePage === '/skills') && (
-        <section id="skills" className="content-section skills-section">
-          <SectionHead index="04" eyebrow="Technical skills" title={<>The <span className="accent-italic">toolkit</span> behind the APIs</>} />
-
-          <div className="skills-grid">
-            {SKILLS.map((group) => (
-              <div key={group.id} className="skill-card">
-                <div className="skill-header">
-                  <span className="skill-icon">{group.id === 'backend' ? '⌘' : group.id === 'database' ? '◫' : group.id === 'frontend' ? '▤' : group.id === 'payments' ? '◍' : '◇'}</span>
-                  <h3>{group.title}</h3>
-                </div>
-                <ul>
-                  {group.items.map((item) => (
-                    <li key={item}><span>◆</span> {item}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-        )}
-
-        {(activePage === '/' || activePage === '/contact') && (
-        <section id="contact" className="content-section contact-section">
-          <SectionHead index="05" eyebrow="Contact" title="" />
-          <h2 className="contact-heading">
-            <span>Let&apos;s</span>
-            <span className="text-stroke">Connect</span>
-            <span className="accent-dot">.</span>
-          </h2>
-
-          <p className="contact-copy">
-            Looking for an opportunity to <span>contribute</span>, <span>learn</span> & <span>grow</span> with a great team. Tell me about the role — I can join <em>immediately</em>.
-          </p>
-
-          <div className="contact-actions">
-            <div className="contact-method">
-              <a href={`mailto:${EMAIL}`} className="primary-btn email-btn">{EMAIL}</a>
-              <button
-                type="button"
-                className="contact-copy-icon"
-                aria-label="Copy email address"
-                title="Copy email address"
-                onClick={() => copyContact('Email', EMAIL)}
-              >
-                {copyFeedback === 'Email copied' ? <Check size={18} /> : <Copy size={18} />}
-              </button>
-            </div>
-            <div className="contact-method">
-              <a href={`tel:${PHONE_TEL}`} className="secondary-btn contact-phone-link">{PHONE}</a>
-              <button
-                type="button"
-                className="contact-copy-icon"
-                aria-label="Copy phone number"
-                title="Copy phone number"
-                onClick={() => copyContact('Phone', PHONE)}
-              >
-                {copyFeedback === 'Phone copied' ? <Check size={18} /> : <Copy size={18} />}
-              </button>
-            </div>
-            <a href={RESUME_URL} className="secondary-btn resume-download-btn" target="_blank" rel="noreferrer">
-              <Download size={17} aria-hidden="true" />
-              Download résumé
-            </a>
-          </div>
-          <nav className="social-links" aria-label="Social profiles">
-            <a href="https://github.com/kundansingh22199" target="_blank" rel="noreferrer" aria-label="Kundan Kumar on GitHub" title="GitHub">
-              <FaGithub size={20} aria-hidden="true" />
-            </a>
-            <a href="https://www.linkedin.com/in/kundan-kumar-singh-757a6b258?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noreferrer" aria-label="Kundan Kumar on LinkedIn" title="LinkedIn">
-              <FaLinkedinIn size={20} aria-hidden="true" />
-            </a>
-            <a href="https://www.instagram.com/kundansingh_0422?stkn=MTM4bHY1d3RhYmFpMA==" target="_blank" rel="noreferrer" aria-label="Kundan Kumar on Instagram" title="Instagram">
-              <FaInstagram size={20} aria-hidden="true" />
-            </a>
-            <a href="https://www.facebook.com/kundanrajpoot.0422" target="_blank" rel="noreferrer" aria-label="Kundan Kumar on Facebook" title="Facebook">
-              <FaFacebookF size={20} aria-hidden="true" />
-            </a>
-            <a
-              href={`https://wa.me/${PHONE_TEL.replace('+', '')}?text=Hi%20Kundan%2C%20I%27d%20like%20to%20discuss%20an%20opportunity.`}
-              className="whatsapp-btn"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open WhatsApp chat"
-              title="WhatsApp"
-            >
-              <FaWhatsapp size={20} aria-hidden="true" />
-            </a>
-          </nav>
-          <p className={`copy-feedback${copyFeedback.startsWith('Unable') ? ' is-error' : ''}`} role="status" aria-live="polite">{copyFeedback}</p>
-
-          <div className="contact-grid">
-            <div className="contact-tile">
-              <span>📍</span>
-              <p>Current location</p>
-              <strong>Akshardham, New Delhi</strong>
-            </div>
-            <div className="contact-tile">
-              <span>🌐</span>
-              <p>Preferred locations</p>
-              <strong>{PREFERRED_LOCATIONS.join(' · ')}</strong>
-            </div>
-            <div className="contact-tile">
-              <span>⚡</span>
-              <p>Notice period</p>
-              <strong>Immediate</strong>
-            </div>
-            <div className="contact-tile">
-              <span>✉️</span>
-              <p>Open to</p>
-              <strong>{WORK_MODES.join(' · ')}</strong>
-            </div>
-          </div>
-        </section>
-        )}
+        {(activePage === '/contact' || activePage === '/portfolio-home') && <PortfolioContact copyFeedback={copyFeedback} onCopy={copyContact} />}
       </main>
 
       <footer className="site-footer">
@@ -571,7 +279,7 @@ function App() {
             <a href={`mailto:${EMAIL}`}>Email</a>
             <a href={`tel:${PHONE_TEL}`}>Phone</a>
             <a href="https://github.com/kundansingh22199" target="_blank" rel="noreferrer">GitHub</a>
-            <span>© {new Date().getFullYear()} Kundan Kumar</span>
+            <span>© {CURRENT_YEAR} Kundan Kumar</span>
           </div>
         </div>
       </footer>
