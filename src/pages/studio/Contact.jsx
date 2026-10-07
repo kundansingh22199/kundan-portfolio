@@ -24,7 +24,7 @@ export default function Contact({ home = false }) {
               <a href="https://github.com/kundansingh22199" target="_blank" rel="noreferrer" aria-label="GitHub"><FaGithub /></a>
               <a href="https://www.instagram.com/kundansingh_0422" target="_blank" rel="noreferrer" aria-label="Instagram"><FaInstagram /></a>
               <a href="https://www.facebook.com/kundanrajpoot.0422" target="_blank" rel="noreferrer" aria-label="Facebook"><FaFacebookF /></a>
-              <a href={`https://wa.me/${PHONE_TEL.replace('+', '')}`} target="_blank" rel="noreferrer" aria-label="WhatsApp"><FaWhatsapp /></a>
+              <a href={`https://wa.me/${PHONE_TEL.replace('+', '')}?text=Hi%20Kundan`} target="_blank" rel="noreferrer" aria-label="WhatsApp"><FaWhatsapp /></a>
             </div>
           </div>
         </div>
