@@ -20,9 +20,9 @@ export default function Home() {
           <div className="studio-art-orbit orbit-one" />
           <div className="studio-art-orbit orbit-two" />
           <div className="studio-art-core"><span>K</span><i /></div>
-          <span className="studio-art-label label-api">API <b>●</b></span>
-          <span className="studio-art-label label-data"><Database size={14} /> DATA</span>
-          <span className="studio-art-label label-cloud">CLOUD SYSTEMS</span>
+          <span className="studio-art-label label-api">WEB API <b>●</b></span>
+          <span className="studio-art-label label-data"><Database size={14} /> SQL SERVER</span>
+          <span className="studio-art-label label-cloud">WEB APPLICATION</span>
           <div className="studio-art-caption"><span>BUILT WITH PURPOSE</span><span>01 / 04</span></div>
         </div>
         <div className="studio-hero-index"><span>01</span><span>BUILDING WITH INTENTION</span></div>
