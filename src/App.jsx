@@ -165,7 +165,7 @@ function StudioWebsite() {
 
       <footer className="studio-footer">
         <StudioLogo />
-        <span>Independent software studio · New Delhi, India</span>
+        <span>Software Developer · New Delhi, India</span>
         <div><Link to="/portfolio">Portfolio</Link><a href={`mailto:${EMAIL}`}>Email</a><span>© {CURRENT_YEAR} Kundan Kumar</span></div>
       </footer>
     </div>
